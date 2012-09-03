@@ -1,0 +1,39 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8">
+    <title></title>
+    <link rel="stylesheet" href="../css/draw-rect.css">
+</head>
+<body>
+
+<div class="container">
+    <div id="playground"></div>
+</div>
+
+
+<!--[if gte IE 6]>
+<script type="text/javascript" src="../js/console-for-ie.js"></script>
+<![endif]-->
+
+<script type="text/javascript" src="../assets/jquery-1.8.1.min.js"></script>
+<script type="text/javascript" src="../assets/underscore-1.3.3.min.js"></script>
+<script type="text/javascript" src="../js/detect-image-natural-size.js"></script>
+<script type="text/javascript" src="../js/draw-rect.js"></script>
+<script type="text/javascript">
+    $(function () {
+        Images.naturalSize('../images/infrared.jpg', function (width, height) {
+            $("#playground").width(width);
+            $("#playground").height(height);
+            $("#playground").css("background-image", "url('../images/infrared.jpg')");
+
+            (function () {
+                var playground = Painter.playground({id:'#playground'});
+
+                playground.paintRect(10, 20, 50, 80);
+            })();
+        });
+    });
+</script>
+</body>
+</html>
