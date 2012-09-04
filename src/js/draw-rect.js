@@ -32,8 +32,18 @@
         this.width = 0;
         this.height = 0;
 
+        //初始化
         this.init = function () {
+            //默认可以拖
             that.dragable();
+
+            // 'delete' 键删除
+            (function () {
+                that.$ele.keypress(function (event) {
+                    //TODO 目前不起作用
+                    console.log(event);
+                });
+            })();
         };
 
         //可以拖
@@ -67,18 +77,18 @@
                 startY = null;
             });
 
-            that.$ele.css('cursor','move');
+            that.$ele.css('cursor', 'move');
         };
 
         //取消拖拽
-        this.undrag = function(){
+        this.undrag = function () {
             //消除绑定的事件
             that.$ele.unbind("mousedown").unbind("mousemove").unbind("moveup");
-            that.$ele.css('cursor','default');
+            that.$ele.css('cursor', 'default');
         };
 
         //将自己删除
-        this.remove = function(){
+        this.remove = function () {
             that.$ele.remove();
         };
 
@@ -141,7 +151,9 @@
             return rect;
         };
 
-        (function ($ele) {
+        //可以画矩形
+        this.drawable = function () {
+            var $ele = that.$ele;
             //新画矩形
             var newRect = null;
             //鼠标的起始点坐标(相对于 playground)
@@ -155,11 +167,9 @@
                     console.log("rect down");
                 } else {
                     startOffset = Painter.positionRelativeTo(event.pageX, event.pageY, $ele[0]);
-                    console.log(startOffset);
                     newRect = that.paintRect(startOffset.x, startOffset.y, 0, 0);
                 }
 
-                console.log("down");
             });
             $ele.mousemove(function (event) {
                 if (!_.isNull(startOffset)) {
@@ -179,13 +189,17 @@
                 endOffset = null;
                 newRect = null;
             });
-        })(that.$ele);
+        };
 
         //判断此事件是否来自 Rect
         this.isEventFromRect = function (event) {
             return  $(event.target).hasClass("rect");
         };
 
+        //init
+        (function () {
+            that.drawable();
+        })();
     }
 
 
