@@ -66,6 +66,15 @@
                 startX = null;
                 startY = null;
             });
+
+            that.$ele.css('cursor','move');
+        };
+
+        //取消拖拽
+        this.undrag = function(){
+            //消除绑定的事件
+            that.$ele.unbind("mousedown").unbind("mousemove").unbind("moveup");
+            that.$ele.css('cursor','default');
         };
 
         this.setX = function (x) {

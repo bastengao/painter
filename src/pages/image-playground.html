@@ -30,7 +30,9 @@
             (function () {
                 var playground = Painter.playground({id:'#playground'});
 
-                playground.paintRect(10, 20, 50, 80);
+                var rect = playground.paintRect(10, 20, 50, 80);
+                rect.undrag();
+                rect.dragable();
             })();
         });
     });
