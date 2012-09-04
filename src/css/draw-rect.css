@@ -13,5 +13,5 @@
 }
 
 .playground .rect:hover {
-    cursor: move;
+    cursor: default;
 }

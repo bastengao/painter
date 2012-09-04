@@ -32,7 +32,11 @@
 
                 var rect = playground.paintRect(10, 20, 50, 80);
                 rect.undrag();
-                rect.dragable();
+
+                var rect2 = playground.paintRect(100, 200, 80, 50);
+                rect2.remove();
+
+                var rect3 = playground.paintRect(200, 200, 80, 50);
             })();
         });
     });

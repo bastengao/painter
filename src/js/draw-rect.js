@@ -77,6 +77,11 @@
             that.$ele.css('cursor','default');
         };
 
+        //将自己删除
+        this.remove = function(){
+            that.$ele.remove();
+        };
+
         this.setX = function (x) {
             that.offsetX = x;
             that.$ele.css('left', x);
