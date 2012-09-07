@@ -92,6 +92,20 @@
             that.$ele.remove();
         };
 
+        /**
+         * 返回矩形的位置及宽高
+         * 如下：
+         * {
+         *    x: 左上角 x
+         *    y: 左上角 y
+         *    width: 宽度
+         *    height: 高度
+         * }
+         */
+        this.box = function () {
+            return {x:that.offsetX, y:that.offsetY, width:that.width, height:that.height};
+        };
+
         this.setX = function (x) {
             that.offsetX = x;
             that.$ele.css('left', x);
@@ -135,13 +149,18 @@
 
 
     //代表操场, 可以在里面画各种矩形
-    function Playground(ele) {
+    function Playground(ele, options) {
         var that = this;
         //原生元素
         this.ele = ele;
         //jQuery 对象
         this.$ele = $(ele);
         this.$ele.addClass("playground");
+        //当画完一个新矩形时的回调
+        this.onPaintRectComplete = null;
+        if (_.has(options, 'rectComplete')) {
+            this.onPaintRectComplete = options['rectComplete'];
+        }
 
         //画矩形
         this.paintRect = function (x, y, width, height) {
@@ -184,6 +203,10 @@
             });
             //结束画矩形
             $ele.mouseup(function () {
+                //调用矩形完成的回调
+                if (_.isFunction(that.onPaintRectComplete)) {
+                    that.onPaintRectComplete(newRect);
+                }
                 //清空
                 startOffset = null;
                 endOffset = null;
@@ -192,7 +215,7 @@
         };
 
         //取消可以画图
-        this.undrawable = function(){
+        this.undrawable = function () {
             //取消画图的鼠标事件
             that.$ele
                 .unbind("mousedown")
@@ -212,7 +235,14 @@
     }
 
 
-    //创建操场
+    /**
+     * 创建操场
+     *
+     * 参数:
+     * id : 绑定的元素的id
+     * ele : 绑定的 dom element(元素)
+     * rectComplete : 画完新矩形的回调, 会传入新画的矩形(Rect)的对象
+     */
     Painter.playground = function (options) {
         var $ele = null;
         if (_.has(options, 'ele')) {
@@ -222,7 +252,7 @@
         }
 
 
-        return new Playground($ele[0]);
+        return new Playground($ele[0], options);
     };
 
     //相对于某一个元素的坐标

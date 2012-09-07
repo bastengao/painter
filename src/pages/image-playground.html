@@ -28,7 +28,12 @@
             $("#playground").css("background-image", "url('../images/infrared.jpg')");
 
             (function () {
-                var playground = Painter.playground({id:'#playground'});
+                var playground = Painter.playground({
+                    id:'#playground',
+                    rectComplete:function (newRect) {
+                        console.log(newRect.box());
+                    }
+                });
 
                 var rect = playground.paintRect(10, 20, 50, 80);
                 rect.undrag();
@@ -38,9 +43,9 @@
 
                 var rect3 = playground.paintRect(200, 200, 80, 50);
 
-                setTimeout(function(){
+                setTimeout(function () {
                     playground.undrawable();
-                },5000);
+                }, 5000);
             })();
         });
     });
