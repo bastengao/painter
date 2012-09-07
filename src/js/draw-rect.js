@@ -191,7 +191,7 @@
 
             });
             $ele.mousemove(function (event) {
-                if (!_.isNull(startOffset)) {
+                if (!_.isNull(startOffset)) { //如果是画矩形
                     endOffset = Painter.positionRelativeTo(event.pageX, event.pageY, $ele[0]);
 
                     newRect.setX(Math.min(startOffset.x, endOffset.x));
@@ -203,14 +203,16 @@
             });
             //结束画矩形
             $ele.mouseup(function () {
-                //调用矩形完成的回调
-                if (_.isFunction(that.onPaintRectComplete)) {
-                    that.onPaintRectComplete(newRect);
+                if (!_.isNull(startOffset)) { //如果是画矩形
+                    //调用矩形完成的回调
+                    if (_.isFunction(that.onPaintRectComplete)) {
+                        that.onPaintRectComplete(newRect);
+                    }
+                    //清空
+                    startOffset = null;
+                    endOffset = null;
+                    newRect = null;
                 }
-                //清空
-                startOffset = null;
-                endOffset = null;
-                newRect = null;
             });
         };
 
