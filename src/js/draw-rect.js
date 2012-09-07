@@ -182,9 +182,9 @@
 
             //开始画新的矩形
             $ele.mousedown(function (event) {
+                //如果事件源来自 rect, 则忽略
                 if (that.isEventFromRect(event)) {
-                    console.log("rect down");
-                } else {
+                } else {  //如何事件源不是来自 rect
                     startOffset = Painter.positionRelativeTo(event.pageX, event.pageY, $ele[0]);
                     newRect = that.paintRect(startOffset.x, startOffset.y, 0, 0);
                 }
