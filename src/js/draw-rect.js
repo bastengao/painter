@@ -139,10 +139,10 @@
 
     //创建新的 Rect
     Rect.build = function (playground) {
-        var rectEle = $(playground).append('<div class="rect"></div>')
+        var $rectEle = $(playground).append('<div class="rect"></div>')
             .children().last();
 
-        var rect = new Rect(rectEle);
+        var rect = new Rect($rectEle[0]);
         rect.init();
         return rect;
     };
