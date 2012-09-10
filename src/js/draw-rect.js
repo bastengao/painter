@@ -134,7 +134,7 @@
         this.setDimension = function (width, height) {
             that.setWidth(width);
             that.setHeight(height);
-        }
+        };
     }
 
     //创建新的 Rect
