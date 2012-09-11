@@ -36,14 +36,6 @@
         this.init = function () {
             //默认可以拖
             that.dragable();
-
-            // 'delete' 键删除
-            (function () {
-                that.$ele.keypress(function (event) {
-                    //TODO 目前不起作用
-                    console.log(event);
-                });
-            })();
         };
 
         //可以拖

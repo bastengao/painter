@@ -14,3 +14,18 @@
 .playground .rect:hover {
     cursor: default;
 }
+
+.playground .rect .mover {
+    display: inline-block;
+    position: absolute;
+    width: 7px;
+    height: 7px;
+    bottom: -4px;
+    right: -4px;
+    border: 1px white solid;
+    background-color: blue;
+    cursor: se-resize;
+    /*
+    background-image: url('stop_white&16.png');
+    */
+}
