@@ -36,6 +36,11 @@
         this.init = function () {
             //默认可以拖
             that.dragable();
+
+            //初始化一个默认
+            that._onPgMouseMoveCallback = function (event) {
+                console.log("playground move", event);
+            };
         };
 
         //playground 上鼠标移动时, Playground 会调用此方法
@@ -48,6 +53,18 @@
         //注册 Playground 鼠标移动 回调
         this.onPgMouseMove = function (func) {
             that._onPgMouseMoveCallback = func;
+        };
+
+        //playground 上鼠标弹起时，Playground 会调用此方法
+        this.playgroundMouseUp = function (event) {
+            if (_.isFunction(that._onPgMouseUpCallback)) {
+                that._onPgMouseUpCallback(event);
+            }
+        };
+
+        //注册 Playground 鼠标弹起 回调
+        this.onPgMouseUp = function (func) {
+            that._onPgMouseUpCallback = func;
         };
 
         //可以拖
@@ -89,21 +106,66 @@
             //消除绑定的事件
             that.$ele.unbind("mousedown").unbind("mousemove").unbind("moveup");
             that.$ele.css('cursor', 'default');
+            return that;
         };
 
         //可以改变大小
         this.resizable = function () {
             var $mover = that.$ele.append('<i class="mover"></i>').find('i');
             var moving = false;
-            $mover.mousedown(function () {
-                console.log("resize");
-                return false;
+            var startBox = null;
+            var startPoint = null;
+            var endPoint = null;
+            var startOffset = null;
+            var endOffset = null;
+            $mover.mousedown(function (event) {
+                console.log("resize start");
+                moving = true;
+                startBox = that.box();
+                startPoint = {x:startBox.x, y:startBox.y};
+                endPoint = {
+                    x:startBox.x + startBox.width,
+                    y:startBox.y + startBox.height
+                };
+                startOffset = {x:event.pageX, y:event.pageY};
             });
+
+            that.onPgMouseMove(function (event) {
+                if (moving) {
+                    console.log("playground move reisable", event);
+                    endOffset = {x:event.pageX, y:event.pageY};
+
+                    var deltaX = endOffset.x - startOffset.x;
+                    var deltaY = endOffset.y - startOffset.y;
+
+                    var newEndPointX = endPoint.x + deltaX;
+                    var newEndPointY = endPoint.y + deltaY;
+
+                    that.setX(Math.min(startPoint.x, newEndPointX));
+                    that.setY(Math.min(startPoint.y, newEndPointY));
+
+                    that.setWidth(Math.abs(startPoint.x - newEndPointX));
+                    that.setHeight(Math.abs(startPoint.y - newEndPointY));
+                }
+            });
+            var mouseUpHandler = function (event) {
+                if (moving) {
+                    console.log("resize end");
+                    moving = false;
+                }
+            };
+            that.onPgMouseUp(function (event) {
+                console.log("playground mouse up resizable", event);
+                mouseUpHandler(event);
+            });
+
+            return that;
         };
 
         //取消改变大小
         this.unresize = function () {
             //TODO
+            that.$ele.find('i').remove();
         };
 
         //将自己删除
@@ -186,12 +248,27 @@
 
         //保存所有的 Rect
         this.rects = [];
+        (function () {
+            //当画完一个新矩形时的回调
+            that.onPaintRectComplete = null;
+            if (_.has(options, 'rectComplete')) {
+                that.onPaintRectComplete = options['rectComplete'];
+            }
 
-        //当画完一个新矩形时的回调
-        this.onPaintRectComplete = null;
-        if (_.has(options, 'rectComplete')) {
-            this.onPaintRectComplete = options['rectComplete'];
-        }
+            //mouse moving
+            that.$ele.bind('mousemove.onPgMouseMove', function (event) {
+                _.each(that.rects, function (rect) {
+                    rect.playgroundMouseMove(event);
+                });
+            });
+
+            //mouse up
+            that.$ele.bind('mouseup.onPgMouseUp', function (event) {
+                _.each(that.rects, function (rect) {
+                    rect.playgroundMouseUp(event);
+                });
+            });
+        })();
 
         //画矩形
         this.paintRect = function (x, y, width, height) {
