@@ -31,7 +31,7 @@
                 var playground = Painter.playground({
                     id:'#playground',
                     rectComplete:function (newRect) {
-                        console.log(newRect.box());
+                        console.log('new rect', newRect.box());
                     }
                 });
 
@@ -42,6 +42,10 @@
                 rect2.remove();
 
                 var rect3 = playground.paintRect(200, 200, 80, 50);
+
+                setTimeout(function () {
+                    playground.undrawable();
+                }, 5000);
             })();
         });
     });

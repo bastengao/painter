@@ -38,6 +38,18 @@
             that.dragable();
         };
 
+        //playground 上鼠标移动时, Playground 会调用此方法
+        this.playgroundMouseMove = function (event) {
+            if (_.isFunction(that._onPgMouseMoveCallback)) {
+                that._onPgMouseMoveCallback(event);
+            }
+        };
+
+        //注册 Playground 鼠标移动 回调
+        this.onPgMouseMove = function (func) {
+            that._onPgMouseMoveCallback = func;
+        };
+
         //可以拖
         this.dragable = function () {
             //拖拽开始时，Rect 元素在 document 中的位置
@@ -79,9 +91,32 @@
             that.$ele.css('cursor', 'default');
         };
 
+        //可以改变大小
+        this.resizable = function () {
+            var $mover = that.$ele.append('<i class="mover"></i>').find('i');
+            var moving = false;
+            $mover.mousedown(function () {
+                console.log("resize");
+                return false;
+            });
+        };
+
+        //取消改变大小
+        this.unresize = function () {
+            //TODO
+        };
+
         //将自己删除
         this.remove = function () {
+            if (_.isFunction(that._onRemoveCallback)) {
+                that._onRemoveCallback(that);
+            }
             that.$ele.remove();
+        };
+
+        //注册删除回调
+        this.onRemove = function (func) {
+            that._onRemoveCallback = func;
         };
 
         /**
@@ -148,6 +183,10 @@
         //jQuery 对象
         this.$ele = $(ele);
         this.$ele.addClass("playground");
+
+        //保存所有的 Rect
+        this.rects = [];
+
         //当画完一个新矩形时的回调
         this.onPaintRectComplete = null;
         if (_.has(options, 'rectComplete')) {
@@ -157,6 +196,11 @@
         //画矩形
         this.paintRect = function (x, y, width, height) {
             var rect = Rect.build(that.ele);
+            that.rects.push(rect);
+            rect.onRemove(function (removingRect) {
+                var index = _.indexOf(that.rects, removingRect);
+                that.rects.splice(index, 1);
+            });
             rect.setOffset(x, y);
             rect.setDimension(width, height);
             return rect;
@@ -173,7 +217,7 @@
             var endOffset = null;
 
             //开始画新的矩形
-            $ele.mousedown(function (event) {
+            $ele.bind('mousedown.draw', function (event) {
                 //如果事件源来自 rect, 则忽略
                 if (that.isEventFromRect(event)) {
                 } else {  //如何事件源不是来自 rect
@@ -182,7 +226,7 @@
                 }
 
             });
-            $ele.mousemove(function (event) {
+            $ele.bind('mousemove.draw', function (event) {
                 if (!_.isNull(startOffset)) { //如果是画矩形
                     endOffset = Painter.positionRelativeTo(event.pageX, event.pageY, $ele[0]);
 
@@ -194,7 +238,7 @@
                 }
             });
             //结束画矩形
-            $ele.mouseup(function () {
+            $ele.bind('mouseup.draw', function () {
                 if (!_.isNull(startOffset)) { //如果是画矩形
                     //调用矩形完成的回调
                     if (_.isFunction(that.onPaintRectComplete)) {
@@ -212,9 +256,9 @@
         this.undrawable = function () {
             //取消画图的鼠标事件
             that.$ele
-                .unbind("mousedown")
-                .unbind("mousemove")
-                .unbind("moveup");
+                .unbind("mousedown.draw")
+                .unbind("mousemove.draw")
+                .unbind("moveup.draw");
         };
 
         //判断此事件是否来自 Rect
