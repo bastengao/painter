@@ -1,0 +1,44 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8">
+    <title>tests for playground</title>
+    <link rel="stylesheet" href="../css/draw-rect.css">
+
+
+    <script type="text/javascript" src="../assets/jquery-1.8.1.min.js"></script>
+    <script type="text/javascript" src="../assets/underscore-1.3.3.min.js"></script>
+    <script type="text/javascript" src="../js/draw-rect.js"></script>
+
+    <style type="text/css">
+        .block {
+            width: 400px;
+            height: 400px;
+            display: block;
+            margin: 10px;
+            border: 2px #999 solid;
+            background-color: black;
+            float: left;
+        }
+    </style>
+</head>
+<body>
+
+<div id="static" class="block">
+</div>
+<script type="text/javascript">
+    $(function () {
+        var playground = Painter.playground({
+            ele:$("#static")[0]
+        });
+
+        playground.undrawable();
+
+        playground.paintRect(10, 10, 20, 20).undrag();
+        playground.paintRect(40, 40, 40, 40).undrag();
+        playground.paintRect(90, 90, 80, 80).undrag();
+        playground.paintRect(180, 180, 180, 180).undrag();
+    });
+</script>
+</body>
+</html>
