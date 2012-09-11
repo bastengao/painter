@@ -255,10 +255,7 @@
         //取消可以画图
         this.undrawable = function () {
             //取消画图的鼠标事件
-            that.$ele
-                .unbind("mousedown.draw")
-                .unbind("mousemove.draw")
-                .unbind("moveup.draw");
+            that.$ele.unbind(".draw");
         };
 
         //判断此事件是否来自 Rect
