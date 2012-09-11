@@ -29,3 +29,27 @@
     background-image: url('stop_white&16.png');
     */
 }
+
+.playground .rect .mover-se {
+    bottom: -4px;
+    right: -4px;
+    cursor: se-resize;
+}
+
+.playground .rect .mover-sw {
+    bottom: -4px;
+    left: -4px;
+    cursor: sw-resize;
+}
+
+.playground .rect .mover-nw {
+    top: -4px;
+    left: -4px;
+    cursor: nw-resize;
+}
+
+.playground .rect .mover-ne {
+    top: -4px;
+    right: -4px;
+    cursor: ne-resize;
+}

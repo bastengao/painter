@@ -141,17 +141,53 @@
                     var newEndPointX = endPoint.x + deltaX;
                     var newEndPointY = endPoint.y + deltaY;
 
-                    that.setX(Math.min(startPoint.x, newEndPointX));
-                    that.setY(Math.min(startPoint.y, newEndPointY));
+                    var newX = Math.min(startPoint.x, newEndPointX);
+                    var newY = Math.min(startPoint.y, newEndPointY);
+                    that.setX(newX);
+                    that.setY(newY);
 
                     that.setWidth(Math.abs(startPoint.x - newEndPointX));
                     that.setHeight(Math.abs(startPoint.y - newEndPointY));
+
+                    $mover.removeClass('mover-nw mover-ne mover-sw mover-sw');
+                    var direction = 0;
+                    if (newY < startPoint.y) {
+                        console.log('n');
+                        direction = direction + 0;
+                    } else {
+                        console.log('s');
+                        direction = direction + 2;
+                    }
+
+                    if (newX < startPoint.x) {
+                        console.log('w');
+                        direction = direction + 0;
+                    } else {
+                        console.log('e');
+                        direction = direction + 1;
+                    }
+
+                    switch (direction) {
+                        case 0:
+                            $mover.addClass('mover-nw');
+                            break;
+                        case 1:
+                            $mover.addClass('mover-ne');
+                            break;
+                        case 2:
+                            $mover.addClass('mover-sw');
+                            break;
+                        case 3:
+                            $mover.addClass('mover-se');
+                            break;
+                    }
                 }
             });
             var mouseUpHandler = function (event) {
                 if (moving) {
                     console.log("resize end");
                     moving = false;
+                    $mover.removeClass('mover-nw mover-ne mover-sw mover-sw');
                 }
             };
             that.onPgMouseUp(function (event) {
