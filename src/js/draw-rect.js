@@ -37,9 +37,8 @@
             //默认可以拖
             that.dragable();
 
-            //初始化一个默认
+            //初始化一个默认回调
             that._onPgMouseMoveCallback = function (event) {
-                console.log("playground move", event);
             };
         };
 
@@ -152,18 +151,14 @@
                     $mover.removeClass('mover-nw mover-ne mover-sw mover-sw');
                     var direction = 0;
                     if (newY < startPoint.y) {
-                        console.log('n');
                         direction = direction + 0;
                     } else {
-                        console.log('s');
                         direction = direction + 2;
                     }
 
                     if (newX < startPoint.x) {
-                        console.log('w');
                         direction = direction + 0;
                     } else {
-                        console.log('e');
                         direction = direction + 1;
                     }
 
