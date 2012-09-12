@@ -328,10 +328,10 @@
             $ele.bind('mousedown.draw', function (event) {
                 //如果事件源来自 rect 或者 mover, 则忽略
                 if (that.isEventFromRect(event)) {
-                    return true;
+                    return true; //TODO 是否要有返回值
                 }
                 if (that.isEventFromMover(event)) {
-                    return true;
+                    return true; //TODO 是否要有返回值
                 }
                 //如何事件源不是来自 rect
                 startOffset = Painter.positionRelativeTo(event.pageX, event.pageY, $ele[0]);
