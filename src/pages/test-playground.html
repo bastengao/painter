@@ -90,5 +90,19 @@
         playground.paintRect(160, 160, 80, 80).undrag().resizable();
     });
 </script>
+
+<div class="block-container">
+    <div id="drawable-resizable" class="block"></div>
+    <h2>resizable rect</h2>
+</div>
+<script type="text/javascript">
+    $(function () {
+        var playground = Painter.playground({
+            id:"#drawable-resizable"
+        });
+
+        playground.paintRect(160, 160, 80, 80).undrag().resizable();
+    });
+</script>
 </body>
 </html>

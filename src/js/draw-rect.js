@@ -331,13 +331,16 @@
 
             //开始画新的矩形
             $ele.bind('mousedown.draw', function (event) {
-                //如果事件源来自 rect, 则忽略
+                //如果事件源来自 rect 或者 mover, 则忽略
                 if (that.isEventFromRect(event)) {
-                } else {  //如何事件源不是来自 rect
-                    startOffset = Painter.positionRelativeTo(event.pageX, event.pageY, $ele[0]);
-                    newRect = that.paintRect(startOffset.x, startOffset.y, 0, 0);
+                    return true;
                 }
-
+                if (that.isEventFromMover(event)) {
+                    return true;
+                }
+                //如何事件源不是来自 rect
+                startOffset = Painter.positionRelativeTo(event.pageX, event.pageY, $ele[0]);
+                newRect = that.paintRect(startOffset.x, startOffset.y, 0, 0);
             });
             $ele.bind('mousemove.draw', function (event) {
                 if (!_.isNull(startOffset)) { //如果是画矩形
@@ -368,12 +371,16 @@
         //取消可以画图
         this.undrawable = function () {
             //取消画图的鼠标事件
-            that.$ele.unbind(".draw");
+            that.$ele.unbind('.draw');
         };
 
         //判断此事件是否来自 Rect
         this.isEventFromRect = function (event) {
-            return  $(event.target).hasClass("rect");
+            return  $(event.target).hasClass('rect');
+        };
+        //判断此事件是否来自 Rect 的 mover
+        this.isEventFromMover = function (event) {
+            return $(event.target).hasClass('mover');
         };
 
         //init
