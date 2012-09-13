@@ -23,6 +23,8 @@ var playground = Painter.playground({id: "#playground"});
 var rect = playground.paintRect(10, 20, 40, 40);
 ```
 
+This is [example](http://bastengao.github.coom/painter/src/pages/test-playground.html).
+
 
 
 #Painter
@@ -49,3 +51,5 @@ var playground = Painter.playground({id: "#playground"});
 //画一个矩形, 矩形的位置为 x 10, y 20 宽高为 40, 40
 var rect = playground.paintRect(10, 20, 40, 40);
 ```
+
+这是[例子](http://bastengao.github.coom/painter/src/pages/test-playground.html).
