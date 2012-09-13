@@ -66,6 +66,11 @@
             that._onPgMouseUpCallback = func;
         };
 
+        //注册拖动回调
+        this.onDrag = function(func){
+          that._onDragCallbakc = func;
+        };
+
         //可以拖
         this.dragable = function () {
             //拖拽开始时，Rect 元素在 document 中的位置
@@ -88,6 +93,10 @@
                     var deltaY = event.pageY - startY;
                     that.setX(startOffset.x + deltaX);
                     that.setY(startOffset.y + deltaY);
+
+                    if(_.isFunction(that._onDragCallbakc)){
+                        that._onDragCallbakc(event);
+                    }
                 }
             });
             that.$ele.mouseup(function () {
