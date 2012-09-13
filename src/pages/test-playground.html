@@ -104,5 +104,25 @@
         playground.paintRect(160, 160, 80, 80).undrag().resizable();
     });
 </script>
+
+<div class="block-container">
+    <div id="onDrag" class="block"></div>
+    <h2>onDrag</h2>
+
+    <p></p>
+</div>
+<script type="text/javascript">
+    $(function () {
+        var playground = Painter.playground({
+            id:"#onDrag"
+        });
+        playground.undrawable();
+
+        var rect = playground.paintRect(160, 160, 80, 80);
+        rect.onDrag(function(event){
+            $("#onDrag").siblings('p').empty().append(rect.box().x + ", " + rect.box().y);
+        });
+    });
+</script>
 </body>
 </html>
