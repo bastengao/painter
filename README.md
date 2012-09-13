@@ -23,7 +23,7 @@ var playground = Painter.playground({id: "#playground"});
 var rect = playground.paintRect(10, 20, 40, 40);
 ```
 
-This is [example](http://bastengao.github.coom/painter/src/pages/test-playground.html).
+This is [example](http://bastengao.github.com/painter/src/pages/test-playground.html).
 
 
 
@@ -52,4 +52,4 @@ var playground = Painter.playground({id: "#playground"});
 var rect = playground.paintRect(10, 20, 40, 40);
 ```
 
-这是[例子](http://bastengao.github.coom/painter/src/pages/test-playground.html).
+这是[例子](http://bastengao.github.com/painter/src/pages/test-playground.html).
