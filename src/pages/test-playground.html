@@ -107,6 +107,21 @@
 </script>
 
 <div class="block-container">
+    <div id="unresize" class="block"></div>
+    <h3>unresize</h3>
+</div>
+<script type="text/javascript">
+    $(function () {
+        var playground = Painter.playground({
+            id:"#unresize"
+        });
+        playground.undrawable();
+
+        playground.paintRect(160, 160, 80, 80).undrag().resizable().unresize();
+    });
+</script>
+
+<div class="block-container">
     <div id="onDrag" class="block"></div>
     <h3>onDrag</h3>
 
