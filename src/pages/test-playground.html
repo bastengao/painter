@@ -14,6 +14,7 @@
         .block-container {
             float: left;
             margin: 10px;
+            width: 400px;
         }
 
         .block {
@@ -29,7 +30,7 @@
 
 <div class="block-container">
     <div id="static" class="block"></div>
-    <h2>static</h2>
+    <h3>static</h3>
 </div>
 <script type="text/javascript">
     $(function () {
@@ -48,7 +49,7 @@
 
 <div class="block-container">
     <div id="drawable" class="block"></div>
-    <h2>drawable playground</h2>
+    <h3>drawable playground</h3>
 </div>
 <script type="text/javascript">
     $(function () {
@@ -63,7 +64,7 @@
 
 <div class="block-container">
     <div id="dragable-rect" class="block"></div>
-    <h2>dragable rect</h2>
+    <h3>dragable rect</h3>
 </div>
 <script type="text/javascript">
     $(function () {
@@ -78,7 +79,7 @@
 
 <div class="block-container">
     <div id="resizable-rect" class="block"></div>
-    <h2>resizable rect</h2>
+    <h3>resizable rect</h3>
 </div>
 <script type="text/javascript">
     $(function () {
@@ -93,7 +94,7 @@
 
 <div class="block-container">
     <div id="drawable-resizable" class="block"></div>
-    <h2>resizable rect</h2>
+    <h3>resizable rect on drawable playground</h3>
 </div>
 <script type="text/javascript">
     $(function () {
@@ -106,8 +107,23 @@
 </script>
 
 <div class="block-container">
+    <div id="unresize" class="block"></div>
+    <h3>unresize</h3>
+</div>
+<script type="text/javascript">
+    $(function () {
+        var playground = Painter.playground({
+            id:"#unresize"
+        });
+        playground.undrawable();
+
+        playground.paintRect(160, 160, 80, 80).undrag().resizable().unresize();
+    });
+</script>
+
+<div class="block-container">
     <div id="onDrag" class="block"></div>
-    <h2>onDrag</h2>
+    <h3>onDrag</h3>
 
     <p></p>
 </div>

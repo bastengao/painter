@@ -23,18 +23,22 @@ var playground = Painter.playground({id: "#playground"});
 var rect = playground.paintRect(10, 20, 40, 40);
 ```
 
+[Manual](https://github.com/bastengao/painter/wiki/manual).
+
+This is [example](http://bastengao.github.com/painter/src/pages/test-playground.html).
+
 
 
 #Painter
 
-Painter ÊÇÒ»¸ö¿ÉÒÔÔÚ html ÉÏ»­Ò»´Ë¶«Î÷µÄ javascript Àà¿â.
+Painter æ˜¯ä¸€ä¸ªå¯ä»¥åœ¨ html ä¸Šç”»ä¸€æ­¤ä¸œè¥¿çš„ javascript ç±»åº“.
 
-##ÈçºÎÊ¹ÓÃ?
+##å¦‚ä½•ä½¿ç”¨?
 
-Painter »ùÓÚ[jQuery](http://jquery.com/) ºÍ [underscore](http://underscorejs.org/).
+Painter åŸºäº[jQuery](http://jquery.com/) å’Œ [underscore](http://underscorejs.org/).
 
-- Ê×ÏÈ, Òı jQuery ºÍ underscore
-- È»ºó, Òı draw-rect.css ºÍ draw-rect.js
+- é¦–å…ˆ, å¼• jQuery å’Œ underscore
+- ç„¶å, å¼• draw-rect.css å’Œ draw-rect.js
 
 ``` html
 <link rel="stylesheet" href="src/css/draw-rect.css">
@@ -42,10 +46,13 @@ Painter »ùÓÚ[jQuery](http://jquery.com/) ºÍ [underscore](http://underscorejs.org
 <script type="text/javascript" src="src/js/draw-rect.js"></script>
 ```
 
-
 ```javascript
 var playground = Painter.playground({id: "#playground"});
 
-//»­Ò»¸ö¾ØĞÎ, ¾ØĞÎµÄÎ»ÖÃÎª x 10, y 20 ¿í¸ßÎª 40, 40
+//ç”»ä¸€ä¸ªçŸ©å½¢, çŸ©å½¢çš„ä½ç½®ä¸º x 10, y 20 å®½é«˜ä¸º 40, 40
 var rect = playground.paintRect(10, 20, 40, 40);
 ```
+
+[ä½¿ç”¨è¯´æ˜](https://github.com/bastengao/painter/wiki/ä¸­æ–‡ä½¿ç”¨è¯´æ˜).
+
+è¿™æ˜¯[ä¾‹å­](http://bastengao.github.com/painter/src/pages/test-playground.html).
