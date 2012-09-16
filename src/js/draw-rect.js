@@ -67,8 +67,8 @@
         };
 
         //注册拖动回调
-        this.onDrag = function(func){
-          that._onDragCallbakc = func;
+        this.onDrag = function (func) {
+            that._onDragCallbakc = func;
         };
 
         //可以拖
@@ -94,7 +94,7 @@
                     that.setX(startOffset.x + deltaX);
                     that.setY(startOffset.y + deltaY);
 
-                    if(_.isFunction(that._onDragCallbakc)){
+                    if (_.isFunction(that._onDragCallbakc)) {
                         that._onDragCallbakc(event);
                     }
                 }
@@ -122,16 +122,15 @@
             var $mover = that.$ele.append('<i class="mover"></i>').find('i');
             var moving = false;
             var startBox = null;
-            var startPoint = null;
-            var endPoint = null;
+            var topLeftPoint = null; //左上角
+            var bottomRightPoint = null; //右下角
             var startOffset = null;
             var endOffset = null;
             $mover.mousedown(function (event) {
-                console.log("resize start");
                 moving = true;
                 startBox = that.box();
-                startPoint = {x:startBox.x, y:startBox.y};
-                endPoint = {
+                topLeftPoint = {x:startBox.x, y:startBox.y};
+                bottomRightPoint = {
                     x:startBox.x + startBox.width,
                     y:startBox.y + startBox.height
                 };
@@ -140,35 +139,34 @@
 
             that.onPgMouseMove(function (event) {
                 if (moving) {
-                    console.log("playground move reisable", event);
                     endOffset = {x:event.pageX, y:event.pageY};
 
                     var deltaX = endOffset.x - startOffset.x;
                     var deltaY = endOffset.y - startOffset.y;
 
-                    var newEndPointX = endPoint.x + deltaX;
-                    var newEndPointY = endPoint.y + deltaY;
+                    var newEndPointX = bottomRightPoint.x + deltaX;
+                    var newEndPointY = bottomRightPoint.y + deltaY;
 
-                    var newX = Math.min(startPoint.x, newEndPointX);
-                    var newY = Math.min(startPoint.y, newEndPointY);
+                    var newX = Math.min(topLeftPoint.x, newEndPointX);
+                    var newY = Math.min(topLeftPoint.y, newEndPointY);
                     that.setX(newX);
                     that.setY(newY);
 
-                    that.setWidth(Math.abs(startPoint.x - newEndPointX));
-                    that.setHeight(Math.abs(startPoint.y - newEndPointY));
+                    that.setWidth(Math.abs(topLeftPoint.x - newEndPointX));
+                    that.setHeight(Math.abs(topLeftPoint.y - newEndPointY));
 
                     $mover.removeClass('mover-nw mover-ne mover-sw mover-sw');
-                    var direction = 0;
-                    if (newY < startPoint.y) {
-                        direction = direction + 0;
+                    var direction = 0; // 小方块在 Rect 中的位置，初始在右下角
+                    if (newY < topLeftPoint.y) {
+                        direction = direction + 0; //上
                     } else {
-                        direction = direction + 2;
+                        direction = direction + 2; //下
                     }
 
-                    if (newX < startPoint.x) {
-                        direction = direction + 0;
+                    if (newX < topLeftPoint.x) {
+                        direction = direction + 0; //左
                     } else {
-                        direction = direction + 1;
+                        direction = direction + 1; //右
                     }
 
                     switch (direction) {
@@ -187,16 +185,11 @@
                     }
                 }
             });
-            var mouseUpHandler = function (event) {
+            that.onPgMouseUp(function (event) {
                 if (moving) {
-                    console.log("resize end");
                     moving = false;
                     $mover.removeClass('mover-nw mover-ne mover-sw mover-sw');
                 }
-            };
-            that.onPgMouseUp(function (event) {
-                console.log("playground mouse up resizable", event);
-                mouseUpHandler(event);
             });
 
             return that;
@@ -204,7 +197,6 @@
 
         //取消改变大小
         this.unresize = function () {
-            //TODO
             that.$ele.find('i').remove();
         };
 
@@ -337,10 +329,10 @@
             $ele.bind('mousedown.draw', function (event) {
                 //如果事件源来自 rect 或者 mover, 则忽略
                 if (that.isEventFromRect(event)) {
-                    return true; //TODO 是否要有返回值
+                    return;
                 }
                 if (that.isEventFromMover(event)) {
-                    return true; //TODO 是否要有返回值
+                    return;
                 }
                 //如何事件源不是来自 rect
                 startOffset = Painter.positionRelativeTo(event.pageX, event.pageY, $ele[0]);
