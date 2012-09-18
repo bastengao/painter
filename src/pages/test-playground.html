@@ -94,7 +94,7 @@
 
 <div class="block-container">
     <div id="drawable-resizable" class="block"></div>
-    <h3>resizable rect on drawable playground</h3>
+    <h4>resizable rect on drawable playground</h4>
 </div>
 <script type="text/javascript">
     $(function () {
@@ -138,6 +138,24 @@
         rect.onDrag(function(event){
             $("#onDrag").siblings('p').empty().append(rect.box().x + ", " + rect.box().y);
         });
+    });
+</script>
+
+<div class="block-container">
+    <div id="setColor" class="block"></div>
+    <h3>setColor</h3>
+</div>
+<script type="text/javascript">
+    $(function () {
+        var playground = Painter.playground({
+            id:"#setColor"
+        });
+        playground.undrawable();
+
+        playground.paintRect(10, 10, 20, 20).undrag().setColor('red');
+        playground.paintRect(40, 40, 40, 40).undrag().setColor('green');
+        playground.paintRect(90, 90, 80, 80).undrag().setColor('blue');
+        playground.paintRect(180, 180, 180, 180).undrag().setColor('#614253');
     });
 </script>
 </body>

@@ -256,6 +256,11 @@
             that.setWidth(width);
             that.setHeight(height);
         };
+
+        this.setColor = function(color){
+            that.$ele.css('border-color',color);
+            return that;
+        };
     }
 
     //创建新的 Rect
