@@ -42,18 +42,6 @@
             that.dragable();
         };
 
-        this._sendEvent = function (event, callbacks) {
-            _.each(callbacks, function (callback) {
-                that._callWhenFunction(callback, event);
-            });
-        };
-
-        this._callWhenFunction = function(func, args){
-            if(_.isFunction(func)){
-                func(args);
-            }
-        };
-
         //playground 上鼠标移动时, Playground 会调用此方法
         this.playgroundMouseMove = function (event) {
             that._sendEvent(event, that._onPgMouseMoveCallbacks);
@@ -105,7 +93,7 @@
                     that.setX(startOffset.x + deltaX);
                     that.setY(startOffset.y + deltaY);
 
-                    that._callWhenFunction(that._onDragCallbakc, event);
+                    Painter._callWhenFunction(that._onDragCallbakc, event);
                 }
             });
 
@@ -220,7 +208,7 @@
 
         //将自己删除
         this.remove = function () {
-            that._callWhenFunction(that._onRemoveCallback, that);
+            Painter._callWhenFunction(that._onRemoveCallback, that);
 
             that.$ele.remove();
         };
@@ -277,6 +265,13 @@
         this.setColor = function (color) {
             that.$ele.css('border-color', color);
             return that;
+        };
+
+        //遍历回调集合
+        this._sendEvent = function (event, callbacks) {
+            _.each(callbacks, function (callback) {
+                Painter._callWhenFunction(callback, event);
+            });
         };
     }
 
@@ -346,6 +341,7 @@
             var startOffset = null;
             //鼠标的终点坐标(相对于 playground)
             var endOffset = null;
+            var drawing = false;
 
             //开始画新的矩形
             $ele.bind('mousedown.draw', function (event) {
@@ -359,9 +355,10 @@
                 //如何事件源不是来自 rect
                 startOffset = Painter.positionRelativeTo(event.pageX, event.pageY, $ele[0]);
                 newRect = that.paintRect(startOffset.x, startOffset.y, 0, 0);
+                drawing = true;
             });
             $ele.bind('mousemove.draw', function (event) {
-                if (!_.isNull(startOffset)) { //如果是画矩形
+                if (drawing) { //如果是画矩形
                     endOffset = Painter.positionRelativeTo(event.pageX, event.pageY, $ele[0]);
 
                     newRect.setX(Math.min(startOffset.x, endOffset.x));
@@ -373,11 +370,11 @@
             });
             //结束画矩形
             $ele.bind('mouseup.draw', function () {
-                if (!_.isNull(startOffset)) { //如果是画矩形
+                if (drawing) { //如果是画矩形
+                    drawing = false;
                     //调用矩形完成的回调
-                    if (_.isFunction(that.onPaintRectComplete)) {
-                        that.onPaintRectComplete(newRect);
-                    }
+                    Painter._callWhenFunction(that.onPaintRectComplete, newRect);
+
                     //清空
                     startOffset = null;
                     endOffset = null;
@@ -432,6 +429,13 @@
     Painter.positionRelativeTo = function (pageX, pageY, element) {
         var offset = $(element).offset();
         return {x:pageX - offset.left, y:pageY - offset.top};
+    };
+
+    //调用，如果能调用
+    Painter._callWhenFunction = function (func, args) {
+        if (_.isFunction(func)) {
+            func(args);
+        }
     };
 })(jQuery);
 
