@@ -121,6 +121,12 @@
             return that;
         };
 
+
+        //改变大小回调
+        this.onResize = function(func){
+            that._onResizeCallback  = func;
+        };
+
         //可以改变大小
         this.resizable = function () {
             var $mover = that.$ele.append('<i class="mover"></i>').find('i');
@@ -187,6 +193,8 @@
                             $mover.addClass('mover-se');
                             break;
                     }
+
+                    Painter._callWhenFunction(that._onResizeCallback, event);
                 }
             });
             that.onPgMouseUp('resize', function (event) {
