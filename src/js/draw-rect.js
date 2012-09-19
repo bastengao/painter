@@ -32,38 +32,49 @@
         this.width = 0;
         this.height = 0;
 
+
+        this._onPgMouseMoveCallbacks = {};
+        this._onPgMouseUpCallbacks = {};
+
         //初始化
         this.init = function () {
             //默认可以拖
             that.dragable();
+        };
 
-            //初始化一个默认回调
-            that._onPgMouseMoveCallback = function (event) {
-            };
+        this._sendEvent = function (event, callbacks) {
+            _.each(callbacks, function (callback) {
+                //TODO use _callWhenFunction
+                if (_.isFunction(callback)) {
+                    callback(event);
+                }
+            });
+        };
+
+        this._callWhenFunction = function(func, args){
+            if(_.isFunction(func)){
+                func(args);
+            }
         };
 
         //playground 上鼠标移动时, Playground 会调用此方法
         this.playgroundMouseMove = function (event) {
-            if (_.isFunction(that._onPgMouseMoveCallback)) {
-                that._onPgMouseMoveCallback(event);
-            }
+            that._sendEvent(event, that._onPgMouseMoveCallbacks);
         };
 
         //注册 Playground 鼠标移动 回调
-        this.onPgMouseMove = function (func) {
-            that._onPgMouseMoveCallback = func;
+        this.onPgMouseMove = function (name, func) {
+            that._onPgMouseMoveCallbacks[name] = func;
         };
 
         //playground 上鼠标弹起时，Playground 会调用此方法
         this.playgroundMouseUp = function (event) {
-            if (_.isFunction(that._onPgMouseUpCallback)) {
-                that._onPgMouseUpCallback(event);
-            }
+            that._sendEvent(event, that._onPgMouseUpCallbacks);
         };
 
         //注册 Playground 鼠标弹起 回调
-        this.onPgMouseUp = function (func) {
-            that._onPgMouseUpCallback = func;
+        this.onPgMouseUp = function (name, func) {
+            that._onPgMouseUpCallbacks[name] = func;
         };
 
         //注册拖动回调
@@ -78,32 +89,37 @@
             //起点在 document 中的位置
             var startX = null;
             var startY = null;
-            that.$ele.mousedown(function (event) {
+            var dragging = false;
+            that.$ele.bind('mousedown.drag', function (event) {
                 startOffset = {x:that.offsetX, y:that.offsetY};
                 startX = event.pageX;
                 startY = event.pageY;
+                dragging = true;
 
                 //fix bug dragging on image at FireFox
                 event.preventDefault();
             });
-            that.$ele.mousemove(function (event) {
+
+            that.onPgMouseMove('drag', function (event) {
                 //如果开始拖拽
-                if (!_.isNull(startX) && !_.isNull(startY)) {
+                if (dragging) {
                     var deltaX = event.pageX - startX;
                     var deltaY = event.pageY - startY;
                     that.setX(startOffset.x + deltaX);
                     that.setY(startOffset.y + deltaY);
 
-                    if (_.isFunction(that._onDragCallbakc)) {
-                        that._onDragCallbakc(event);
-                    }
+                    that._callWhenFunction(that._onDragCallbakc, event);
                 }
             });
-            that.$ele.mouseup(function () {
-                //清空
-                startOffset = null;
-                startX = null;
-                startY = null;
+
+            that.onPgMouseUp('drag', function (event) {
+                if (dragging) {
+                    dragging = false;
+                    //清空
+                    startOffset = null;
+                    startX = null;
+                    startY = null;
+                }
             });
 
             that.$ele.css('cursor', 'move');
@@ -112,7 +128,10 @@
         //取消拖拽
         this.undrag = function () {
             //消除绑定的事件
-            that.$ele.unbind("mousedown").unbind("mousemove").unbind("moveup");
+            that.$ele.unbind("mousedown.drag");
+            delete that._onPgMouseMoveCallbacks['drag'];
+            delete that._onPgMouseUpCallbacks['drag'];
+
             that.$ele.css('cursor', 'default');
             return that;
         };
@@ -137,7 +156,7 @@
                 startOffset = {x:event.pageX, y:event.pageY};
             });
 
-            that.onPgMouseMove(function (event) {
+            that.onPgMouseMove('resize', function (event) {
                 if (moving) {
                     endOffset = {x:event.pageX, y:event.pageY};
 
@@ -185,7 +204,7 @@
                     }
                 }
             });
-            that.onPgMouseUp(function (event) {
+            that.onPgMouseUp('resize', function (event) {
                 if (moving) {
                     moving = false;
                     $mover.removeClass('mover-nw mover-ne mover-sw mover-sw');
@@ -198,13 +217,14 @@
         //取消改变大小
         this.unresize = function () {
             that.$ele.find('i').remove();
+            delete that._onPgMouseMoveCallbacks['resize'];
+            delete that._onPgMouseUpCallbacks['resize'];
         };
 
         //将自己删除
         this.remove = function () {
-            if (_.isFunction(that._onRemoveCallback)) {
-                that._onRemoveCallback(that);
-            }
+            that._callWhenFunction(that._onRemoveCallback, that);
+
             that.$ele.remove();
         };
 
@@ -257,8 +277,8 @@
             that.setHeight(height);
         };
 
-        this.setColor = function(color){
-            that.$ele.css('border-color',color);
+        this.setColor = function (color) {
+            that.$ele.css('border-color', color);
             return that;
         };
     }
