@@ -44,10 +44,7 @@
 
         this._sendEvent = function (event, callbacks) {
             _.each(callbacks, function (callback) {
-                //TODO use _callWhenFunction
-                if (_.isFunction(callback)) {
-                    callback(event);
-                }
+                that._callWhenFunction(callback, event);
             });
         };
 
