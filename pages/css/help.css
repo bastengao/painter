@@ -1,0 +1,22 @@
+.container {
+    margin: 0 auto;
+    width: 900px;
+}
+
+.bg-black{
+    background-color: black;
+}
+
+.block-container {
+    float: left;
+    margin: 10px;
+    width: 400px;
+}
+
+.block {
+    width: 400px;
+    height: 400px;
+    display: block;
+    border: 2px #999 solid;
+    background-color: black;
+}

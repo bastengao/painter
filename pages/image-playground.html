@@ -3,29 +3,31 @@
 <head>
     <meta charset="utf-8">
     <title></title>
-    <link rel="stylesheet" href="../css/draw-rect.css">
+    <link rel="stylesheet" href="../src/css/draw-rect.css">
+    <link rel="stylesheet" href="css/help.css">
 </head>
-<body style="background-color:black;">
+<body class="bg-black">
 
-<div class="container" style="margin: 0 auto; width:1000px;">
+<div class="container" style=" width:1000px;">
     <div id="playground"></div>
 </div>
 
 
 <!--[if gte IE 6]>
-<script type="text/javascript" src="../js/console-for-ie.js"></script>
+<script type="text/javascript" src="../src/js/console-for-ie.js"></script>
 <![endif]-->
 
 <script type="text/javascript" src="../assets/jquery-1.8.1.min.js"></script>
 <script type="text/javascript" src="../assets/underscore-1.3.3.min.js"></script>
-<script type="text/javascript" src="../js/detect-image-natural-size.js"></script>
-<script type="text/javascript" src="../js/draw-rect.js"></script>
+<script type="text/javascript" src="../src/js/detect-image-natural-size.js"></script>
+<script type="text/javascript" src="../src/js/draw-rect.js"></script>
 <script type="text/javascript">
     $(function () {
-        Images.naturalSize('../images/800px-Modern-Trade-Painter.jpg', function (width, height) {
+        var imagePath = 'images/800px-Modern-Trade-Painter.jpg';
+        Images.naturalSize(imagePath, function (width, height) {
             $("#playground").width(width);
             $("#playground").height(height);
-            $("#playground").css("background-image", "url('../images/800px-Modern-Trade-Painter.jpg')");
+            $("#playground").css("background-image", "url('" + imagePath +"')");
 
             (function () {
                 var playground = Painter.playground({
