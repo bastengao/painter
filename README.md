@@ -25,7 +25,7 @@ var rect = playground.paintRect(10, 20, 40, 40);
 
 [Manual](https://github.com/bastengao/painter/wiki/manual).
 
-This is [example](http://bastengao.github.com/painter/src/pages/test-playground.html).
+This is [example](http://bastengao.github.com/painter/pages/test-playground.html).
 
 
 
@@ -55,4 +55,4 @@ var rect = playground.paintRect(10, 20, 40, 40);
 
 [使用说明](https://github.com/bastengao/painter/wiki/中文使用说明).
 
-这是[例子](http://bastengao.github.com/painter/src/pages/test-playground.html).
+这是[例子](http://bastengao.github.com/painter/pages/test-playground.html).
