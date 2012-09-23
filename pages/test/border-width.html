@@ -24,10 +24,14 @@
         pg.undrawable();
         var rect = pg.paintRect(0, 0, 100, 100);
 
-        rect.$ele.css('border-width', '10px');
+        rect.setBorderWidth(10);
 
         rect.setColor('red');
         rect.setBorderColor('blue');
+
+        var rect2 =  pg.paintRect(200, 0, 100, 100);
+        rect2.setBorderWidth(0);
+        rect2.setColor('blue');
     });
 </script>
 

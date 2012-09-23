@@ -275,6 +275,11 @@
             return that;
         };
 
+        this.setBorderWidth = function(borderWidth){
+            that.$ele.css('border-width', borderWidth);
+            return that;
+        };
+
         this.setColor = function(color){
             that.$ele.css('background-color', color);
             return that;
