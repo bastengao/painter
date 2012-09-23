@@ -4,9 +4,30 @@
     <meta charset="utf-8">
     <title>border and width</title>
     <link rel="stylesheet" href="../../src/css/draw-rect.css">
+    <link rel="stylesheet" href="../css/help.css">
+
+    <script type="text/javascript" src="../../assets/jquery-1.8.1.min.js"></script>
+    <script type="text/javascript" src="../../assets/underscore-1.3.3.min.js"></script>
     <script type="text/javascript" src="../../src/js/draw-rect.js"></script>
 </head>
-<body>
+<body class="bg-black">
+
+<div class="container">
+    <div class="block-container">
+        <div id="playground" class="block"></div>
+    </div>
+</div>
+
+<script type="text/javascript">
+    $(function () {
+        var pg = Painter.playground({id:'#playground'});
+        pg.undrawable();
+        var rect = pg.paintRect(0, 0, 100, 100);
+
+        rect.$ele.css('border-width', '10px');
+        rect.$ele.css('background-color', 'red');
+    });
+</script>
 
 </body>
 </html>

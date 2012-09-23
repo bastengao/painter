@@ -270,8 +270,13 @@
             that.setHeight(height);
         };
 
-        this.setColor = function (color) {
+        this.setBorderColor = function (color) {
             that.$ele.css('border-color', color);
+            return that;
+        };
+
+        this.setColor = function(color){
+            that.$ele.css('background-color', color);
             return that;
         };
 
