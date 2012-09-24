@@ -32,6 +32,19 @@
         var rect2 =  pg.paintRect(200, 0, 100, 100);
         rect2.setBorderWidth(0);
         rect2.setColor('blue');
+
+
+        var box = rect.box();
+        var box2 = rect2.box();
+        console.log(box.x === box2.x);
+        console.log(box.y === box2.y);
+        console.log(box.width === box2.width);
+        console.log(box.height === box2.height);
+
+        console.log(rect.$ele.position());
+        console.log(rect.$ele.offset());
+        console.log(rect2.$ele.position());
+        console.log(rect2.$ele.offset());
     });
 </script>
 
