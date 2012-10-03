@@ -31,8 +31,11 @@
         //宽高
         this.width = 0;
         this.height = 0;
+        // 边框宽度
+        this.borderWidth = 0;
 
 
+        // 背景鼠标事件回调集合
         this._onPgMouseMoveCallbacks = {};
         this._onPgMouseUpCallbacks = {};
 
@@ -276,6 +279,7 @@
         };
 
         this.setBorderWidth = function(borderWidth){
+            that.borderWidth = borderWidth;
             that.$ele.css('border-width', borderWidth);
             return that;
         };
