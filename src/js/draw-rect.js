@@ -25,14 +25,14 @@
         var that = this;
         this.ele = ele;
         this.$ele = $(ele);
-        //左上角位置(Rect 元素的位置是相对于 playground 的位置)
+        // content 左上角位置(Rect 元素的位置是相对于 playground 的位置, 不包括 border)
         this.offsetX = 0;
         this.offsetY = 0;
         //宽高
         this.width = 0;
         this.height = 0;
         // 边框宽度
-        this.borderWidth = 0;
+        this.borderWidth = 1;
 
 
         // 背景鼠标事件回调集合
@@ -162,8 +162,7 @@
 
                     var newX = Math.min(topLeftPoint.x, newEndPointX);
                     var newY = Math.min(topLeftPoint.y, newEndPointY);
-                    that.setX(newX);
-                    that.setY(newY);
+                    that.setOffset(newX, newY);
 
                     that.setWidth(Math.abs(topLeftPoint.x - newEndPointX));
                     that.setHeight(Math.abs(topLeftPoint.y - newEndPointY));
@@ -245,13 +244,13 @@
 
         this.setX = function (x) {
             that.offsetX = x;
-            that.$ele.css('left', x);
+            that.$ele.css('left', x - that.borderWidth);
             return that;
         };
 
         this.setY = function (y) {
             that.offsetY = y;
-            that.$ele.css('top', y);
+            that.$ele.css('top', y - that.borderWidth);
             return that;
         };
 
@@ -292,7 +291,12 @@
         this.setBorderWidth = function (borderWidth) {
             that.borderWidth = borderWidth;
             that.$ele.css('border-width', borderWidth);
+            that._updateOffset();
             return that;
+        };
+
+        this._updateOffset = function () {
+            that.setOffset(that.offsetX, that.offsetY);
         };
 
         //遍历回调集合
