@@ -126,8 +126,8 @@
 
 
         //改变大小回调
-        this.onResize = function(func){
-            that._onResizeCallback  = func;
+        this.onResize = function (func) {
+            that._onResizeCallback = func;
         };
 
         //可以改变大小
@@ -279,7 +279,7 @@
             return that;
         };
 
-        this.setColor = function(color){
+        this.setColor = function (color) {
             that.$ele.css('background-color', color);
             return that;
         };
@@ -289,7 +289,7 @@
             return that;
         };
 
-        this.setBorderWidth = function(borderWidth){
+        this.setBorderWidth = function (borderWidth) {
             that.borderWidth = borderWidth;
             that.$ele.css('border-width', borderWidth);
             return that;
@@ -305,6 +305,7 @@
 
     //创建新的 Rect
     Rect.build = function (playground) {
+        //TODO use appendTo
         var $rectEle = $(playground).append('<div class="rect"></div>')
             .children().last();
 
