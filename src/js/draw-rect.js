@@ -279,6 +279,11 @@
             return that;
         };
 
+        this.setColor = function(color){
+            that.$ele.css('background-color', color);
+            return that;
+        };
+
         this.setBorderColor = function (color) {
             that.$ele.css('border-color', color);
             return that;
@@ -287,11 +292,6 @@
         this.setBorderWidth = function(borderWidth){
             that.borderWidth = borderWidth;
             that.$ele.css('border-width', borderWidth);
-            return that;
-        };
-
-        this.setColor = function(color){
-            that.$ele.css('background-color', color);
             return that;
         };
 
