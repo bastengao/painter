@@ -246,31 +246,37 @@
         this.setX = function (x) {
             that.offsetX = x;
             that.$ele.css('left', x);
+            return that;
         };
 
         this.setY = function (y) {
             that.offsetY = y;
             that.$ele.css('top', y);
+            return that;
         };
 
         this.setOffset = function (x, y) {
             that.setX(x);
             that.setY(y);
+            return that;
         };
 
         this.setWidth = function (width) {
             that.width = width;
             that.$ele.width(width);
+            return that;
         };
 
         this.setHeight = function (height) {
             that.height = height;
             that.$ele.height(height);
+            return that;
         };
 
         this.setDimension = function (width, height) {
             that.setWidth(width);
             that.setHeight(height);
+            return that;
         };
 
         this.setBorderColor = function (color) {
