@@ -25,14 +25,17 @@
         var that = this;
         this.ele = ele;
         this.$ele = $(ele);
-        //左上角位置(Rect 元素的位置是相对于 playground 的位置)
+        // content 左上角位置(Rect 元素的位置是相对于 playground 的位置, 不包括 border)
         this.offsetX = 0;
         this.offsetY = 0;
         //宽高
         this.width = 0;
         this.height = 0;
+        // 边框宽度
+        this.borderWidth = 1;
 
 
+        // 背景鼠标事件回调集合
         this._onPgMouseMoveCallbacks = {};
         this._onPgMouseUpCallbacks = {};
 
@@ -123,8 +126,8 @@
 
 
         //改变大小回调
-        this.onResize = function(func){
-            that._onResizeCallback  = func;
+        this.onResize = function (func) {
+            that._onResizeCallback = func;
         };
 
         //可以改变大小
@@ -159,8 +162,7 @@
 
                     var newX = Math.min(topLeftPoint.x, newEndPointX);
                     var newY = Math.min(topLeftPoint.y, newEndPointY);
-                    that.setX(newX);
-                    that.setY(newY);
+                    that.setOffset(newX, newY);
 
                     that.setWidth(Math.abs(topLeftPoint.x - newEndPointX));
                     that.setHeight(Math.abs(topLeftPoint.y - newEndPointY));
@@ -242,32 +244,43 @@
 
         this.setX = function (x) {
             that.offsetX = x;
-            that.$ele.css('left', x);
+            that.$ele.css('left', x - that.borderWidth);
+            return that;
         };
 
         this.setY = function (y) {
             that.offsetY = y;
-            that.$ele.css('top', y);
+            that.$ele.css('top', y - that.borderWidth);
+            return that;
         };
 
         this.setOffset = function (x, y) {
             that.setX(x);
             that.setY(y);
+            return that;
         };
 
         this.setWidth = function (width) {
             that.width = width;
             that.$ele.width(width);
+            return that;
         };
 
         this.setHeight = function (height) {
             that.height = height;
             that.$ele.height(height);
+            return that;
         };
 
         this.setDimension = function (width, height) {
             that.setWidth(width);
             that.setHeight(height);
+            return that;
+        };
+
+        this.setColor = function (color) {
+            that.$ele.css('background-color', color);
+            return that;
         };
 
         this.setBorderColor = function (color) {
@@ -275,14 +288,15 @@
             return that;
         };
 
-        this.setBorderWidth = function(borderWidth){
+        this.setBorderWidth = function (borderWidth) {
+            that.borderWidth = borderWidth;
             that.$ele.css('border-width', borderWidth);
+            that._updateOffset();
             return that;
         };
 
-        this.setColor = function(color){
-            that.$ele.css('background-color', color);
-            return that;
+        this._updateOffset = function () {
+            that.setOffset(that.offsetX, that.offsetY);
         };
 
         //遍历回调集合
@@ -295,6 +309,7 @@
 
     //创建新的 Rect
     Rect.build = function (playground) {
+        //TODO use appendTo
         var $rectEle = $(playground).append('<div class="rect"></div>')
             .children().last();
 
