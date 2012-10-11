@@ -333,8 +333,14 @@
         (function () {
             //当开始手工画矩形时回调
             that.onPaintRectStart = null;
-            if(_.has(options,'rectStart')){
+            if (_.has(options, 'rectStart')) {
                 that.onPaintRectStart = options['rectStart'];
+            }
+
+            //当手工画矩形中回调
+            that.onPaintRectDoing = null;
+            if (_.has(options, 'rectDrawing')) {
+                that.onPaintRectDoing = options['rectDrawing'];
             }
 
             //当画完一个新矩形时的回调
@@ -394,8 +400,8 @@
                 //如果事件源不是来自 rect
                 startOffset = Painter.positionRelativeTo(event.pageX, event.pageY, $ele[0]);
                 newRect = that.paintRect(startOffset.x, startOffset.y, 0, 0);
-                Painter._callWhenFunction(that.onPaintRectStart, newRect);
                 drawing = true;
+                Painter._callWhenFunction(that.onPaintRectStart, newRect);
             });
             $ele.bind('mousemove.draw', function (event) {
                 if (drawing) { //如果是画矩形
@@ -406,6 +412,8 @@
 
                     newRect.setWidth(Math.abs(endOffset.x - startOffset.x));
                     newRect.setHeight(Math.abs(endOffset.y - startOffset.y));
+
+                    Painter._callWhenFunction(that.onPaintRectDoing, newRect);
                 }
             });
             //结束画矩形

@@ -55,14 +55,18 @@
 </div>
 <script type="text/javascript">
     $(function () {
+        var $log = $("#manualPaintCallbacks").siblings('span');
         var playground = Painter.playground({
             id:"#manualPaintCallbacks",
             rectStart:function (newRect) {
                 newRect.undrag();
-                $("#manualPaintCallbacks").siblings('span').empty().append('draw rect start');
+                $log.empty().append('draw rect start');
+            },
+            rectDrawing:function(newRect){
+                $log.empty().append('drawing rect');
             },
             rectComplete:function (newRect) {
-                $("#manualPaintCallbacks").siblings('span').empty().append('draw rect done');
+                $log.empty().append('draw rect done');
             }
         });
     });
