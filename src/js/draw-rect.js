@@ -309,9 +309,7 @@
 
     //创建新的 Rect
     Rect.build = function (playground) {
-        //TODO use appendTo
-        var $rectEle = $(playground).append('<div class="rect"></div>')
-            .children().last();
+        var $rectEle = $('<div class="rect"></div>').appendTo($(playground));
 
         var rect = new Rect($rectEle[0]);
         rect.init();
