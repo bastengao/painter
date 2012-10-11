@@ -1,5 +1,5 @@
 /**
- *
+ * v0.1.1
  * draw rect
  * 画矩形
  *
@@ -331,6 +331,12 @@
         //保存所有的 Rect
         this.rects = [];
         (function () {
+            //当开始手工画矩形时回调
+            that.onPaintRectStart = null;
+            if(_.has(options,'rectStart')){
+                that.onPaintRectStart = options['rectStart'];
+            }
+
             //当画完一个新矩形时的回调
             that.onPaintRectComplete = null;
             if (_.has(options, 'rectComplete')) {
@@ -385,9 +391,10 @@
                 if (that.isEventFromMover(event)) {
                     return;
                 }
-                //如何事件源不是来自 rect
+                //如果事件源不是来自 rect
                 startOffset = Painter.positionRelativeTo(event.pageX, event.pageY, $ele[0]);
                 newRect = that.paintRect(startOffset.x, startOffset.y, 0, 0);
+                Painter._callWhenFunction(that.onPaintRectStart, newRect);
                 drawing = true;
             });
             $ele.bind('mousemove.draw', function (event) {
@@ -451,7 +458,7 @@
         if (_.has(options, 'ele')) {
             $ele = $(options['ele']);
         } else if (_.has(options, 'id')) {
-            $ele = $(options['id'])
+            $ele = $(options['id']);
         }
 
 

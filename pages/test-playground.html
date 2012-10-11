@@ -49,6 +49,26 @@
 </script>
 
 <div class="block-container">
+    <div id="manualPaintCallbacks" class="block"></div>
+    <h3>manual draw rect callbacks</h3>
+    <span></span>
+</div>
+<script type="text/javascript">
+    $(function () {
+        var playground = Painter.playground({
+            id:"#manualPaintCallbacks",
+            rectStart:function (newRect) {
+                newRect.undrag();
+                $("#manualPaintCallbacks").siblings('span').empty().append('draw rect start');
+            },
+            rectComplete:function (newRect) {
+                $("#manualPaintCallbacks").siblings('span').empty().append('draw rect done');
+            }
+        });
+    });
+</script>
+
+<div class="block-container">
     <div id="dragable-rect" class="block"></div>
     <h3>dragable rect</h3>
 </div>
@@ -112,7 +132,7 @@
     <h3>setColor</h3>
 </div>
 <script type="text/javascript">
-    $(function(){
+    $(function () {
         var playground = Painter.playground({id:'#setColor'});
         playground.undrawable();
 
@@ -156,7 +176,7 @@
         playground.undrawable();
 
         var rect = playground.paintRect(160, 160, 80, 80);
-        rect.onDrag(function(event){
+        rect.onDrag(function (event) {
             $("#onDrag").siblings('p').empty().append(rect.box().x + ", " + rect.box().y);
         });
     });
@@ -176,7 +196,7 @@
         playground.undrawable();
 
         var rect = playground.paintRect(160, 160, 80, 80).undrag().resizable();
-        rect.onResize(function(event){
+        rect.onResize(function (event) {
             $("#onResize").siblings('p').empty().append(rect.box().width + ", " + rect.box().height);
         });
     });
