@@ -1,5 +1,5 @@
 /**
- *
+ * v0.1.1
  * draw rect
  * 画矩形
  *
@@ -309,9 +309,7 @@
 
     //创建新的 Rect
     Rect.build = function (playground) {
-        //TODO use appendTo
-        var $rectEle = $(playground).append('<div class="rect"></div>')
-            .children().last();
+        var $rectEle = $('<div class="rect"></div>').appendTo($(playground));
 
         var rect = new Rect($rectEle[0]);
         rect.init();
@@ -331,6 +329,18 @@
         //保存所有的 Rect
         this.rects = [];
         (function () {
+            //当开始手工画矩形时回调
+            that.onPaintRectStart = null;
+            if (_.has(options, 'rectStart')) {
+                that.onPaintRectStart = options['rectStart'];
+            }
+
+            //当手工画矩形中回调
+            that.onPaintRectDoing = null;
+            if (_.has(options, 'rectDrawing')) {
+                that.onPaintRectDoing = options['rectDrawing'];
+            }
+
             //当画完一个新矩形时的回调
             that.onPaintRectComplete = null;
             if (_.has(options, 'rectComplete')) {
@@ -385,10 +395,11 @@
                 if (that.isEventFromMover(event)) {
                     return;
                 }
-                //如何事件源不是来自 rect
+                //如果事件源不是来自 rect
                 startOffset = Painter.positionRelativeTo(event.pageX, event.pageY, $ele[0]);
                 newRect = that.paintRect(startOffset.x, startOffset.y, 0, 0);
                 drawing = true;
+                Painter._callWhenFunction(that.onPaintRectStart, newRect);
             });
             $ele.bind('mousemove.draw', function (event) {
                 if (drawing) { //如果是画矩形
@@ -399,6 +410,8 @@
 
                     newRect.setWidth(Math.abs(endOffset.x - startOffset.x));
                     newRect.setHeight(Math.abs(endOffset.y - startOffset.y));
+
+                    Painter._callWhenFunction(that.onPaintRectDoing, newRect);
                 }
             });
             //结束画矩形
@@ -451,7 +464,7 @@
         if (_.has(options, 'ele')) {
             $ele = $(options['ele']);
         } else if (_.has(options, 'id')) {
-            $ele = $(options['id'])
+            $ele = $(options['id']);
         }
 
 
