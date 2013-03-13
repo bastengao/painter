@@ -297,7 +297,7 @@
 
         //遍历回调集合
         this._sendEvent = function (event, callbacks) {
-            _.each(callbacks, function (callback) {
+            $.each(callbacks, function (i, callback) {
                 Painter._callWhenFunction(callback, event);
             });
         };
@@ -352,7 +352,7 @@
 
             //mouse up
             that.$ele.bind('mouseup.onPgMouseUp', function (event) {
-                _.each(that.rects, function (rect) {
+                $.each(that.rects, function (i, rect) {
                     rect.playgroundMouseUp(event);
                 });
             });
@@ -457,9 +457,9 @@
      */
     Painter.playground = function (options) {
         var $ele = null;
-        if (_.has(options, 'ele')) {
+        if (options.ele) {
             $ele = $(options['ele']);
-        } else if (_.has(options, 'id')) {
+        } else if (options.id) {
             $ele = $(options['id']);
         }
 
@@ -475,7 +475,7 @@
 
     //调用，如果能调用
     Painter._callWhenFunction = function (func, args) {
-        if (_.isFunction(func)) {
+        if ($.isFunction(func)) {
             func(args);
         }
     };
