@@ -5,7 +5,7 @@
  *
  * @author bastengao
  * @date 2013-03-13
- * @dependency jQuery, underscore
+ * @dependency jQuery
  */
 (function ($, global) {
     //画家是最大的名称空间
@@ -363,7 +363,7 @@
             var rect = Rect.build(that.ele);
             that.rects.push(rect);
             rect.onRemove(function (removingRect) {
-                var index = _.indexOf(that.rects, removingRect);
+                var index = indexOf(that.rects, removingRect);
                 that.rects.splice(index, 1);
             });
             rect.setOffset(x, y);
@@ -479,5 +479,14 @@
             func(args);
         }
     };
+
+    function indexOf(array, item){
+        for(var i = 0; i < array.length; i++){
+            if(array[i] === item){
+                return i;
+            }
+            return -1;
+        }
+    }
 })(jQuery, window);
 
