@@ -327,25 +327,25 @@
         (function () {
             //当开始手工画矩形时回调
             that.onPaintRectStart = null;
-            if (_.has(options, 'rectStart')) {
+            if (options['rectStart']) {
                 that.onPaintRectStart = options['rectStart'];
             }
 
             //当手工画矩形中回调
             that.onPaintRectDoing = null;
-            if (_.has(options, 'rectDrawing')) {
+            if (options['rectDrawing']) {
                 that.onPaintRectDoing = options['rectDrawing'];
             }
 
             //当画完一个新矩形时的回调
             that.onPaintRectComplete = null;
-            if (_.has(options, 'rectComplete')) {
+            if (options['rectComplete']) {
                 that.onPaintRectComplete = options['rectComplete'];
             }
 
             //mouse moving
             that.$ele.bind('mousemove.onPgMouseMove', function (event) {
-                _.each(that.rects, function (rect) {
+                $.each(that.rects, function (i, rect) {
                     rect.playgroundMouseMove(event);
                 });
             });
