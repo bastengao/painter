@@ -1,22 +1,18 @@
 /**
- * v0.1.1
+ * v0.1.2-beta
  * draw rect
  * 画矩形
  *
- * User: bastengao
- * Date: 12-9-3  Time: 上午9:33
- * dependency : jQuery, underscore
+ * @author bastengao
+ * @date 2013-03-13
+ * @dependency jQuery, underscore
  */
-(function ($) {
+(function ($, global) {
     //画家是最大的名称空间
     //init Painter
     var Painter = (function () {
-        if (_.isObject(window.Painter)) {
-            return window.Painter;
-        } else {
-            window.Painter = {};
-            return window.Painter;
-        }
+        global.Painter = global.Painter || {};
+        return global.Painter;
     })();
 
 
@@ -79,7 +75,7 @@
             var startY = null;
             var dragging = false;
             that.$ele.bind('mousedown.drag', function (event) {
-                startOffset = {x:that.offsetX, y:that.offsetY};
+                startOffset = {x: that.offsetX, y: that.offsetY};
                 startX = event.pageX;
                 startY = event.pageY;
                 dragging = true;
@@ -142,17 +138,17 @@
             $mover.mousedown(function (event) {
                 moving = true;
                 startBox = that.box();
-                topLeftPoint = {x:startBox.x, y:startBox.y};
+                topLeftPoint = {x: startBox.x, y: startBox.y};
                 bottomRightPoint = {
-                    x:startBox.x + startBox.width,
-                    y:startBox.y + startBox.height
+                    x: startBox.x + startBox.width,
+                    y: startBox.y + startBox.height
                 };
-                startOffset = {x:event.pageX, y:event.pageY};
+                startOffset = {x: event.pageX, y: event.pageY};
             });
 
             that.onPgMouseMove('resize', function (event) {
                 if (moving) {
-                    endOffset = {x:event.pageX, y:event.pageY};
+                    endOffset = {x: event.pageX, y: event.pageY};
 
                     var deltaX = endOffset.x - startOffset.x;
                     var deltaY = endOffset.y - startOffset.y;
@@ -239,7 +235,7 @@
          * }
          */
         this.box = function () {
-            return {x:that.offsetX, y:that.offsetY, width:that.width, height:that.height};
+            return {x: that.offsetX, y: that.offsetY, width: that.width, height: that.height};
         };
 
         this.setX = function (x) {
@@ -474,7 +470,7 @@
     //相对于某一个元素的坐标
     Painter.positionRelativeTo = function (pageX, pageY, element) {
         var offset = $(element).offset();
-        return {x:pageX - offset.left, y:pageY - offset.top};
+        return {x: pageX - offset.left, y: pageY - offset.top};
     };
 
     //调用，如果能调用
@@ -483,5 +479,5 @@
             func(args);
         }
     };
-})(jQuery);
+})(jQuery, window);
 
