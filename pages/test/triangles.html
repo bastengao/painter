@@ -1,0 +1,57 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8">
+    <title>三角形</title>
+    <style type="text/css">
+        .arrow-up {
+            width: 100px;
+            height: 0;
+            border-left: 200px solid transparent;
+            border-right: 200px solid transparent;
+            border-bottom: 100px solid black;
+        }
+
+        .arrow-down {
+            width: 100px;
+            height: 0;
+            border-left: 150px solid transparent;
+            border-right: 150px solid transparent;
+            border-top: 100px solid black;
+        }
+
+        .arrow-left {
+            width: 0;
+            height: 0;
+            border-top: 50px solid transparent;
+            border-bottom: 50px solid transparent;
+            border-right: 400px solid black;
+        }
+        .arrow-up2 {
+            width: 0;
+            height: 0;
+            border-right: 300px solid transparent;
+            border-bottom: 50px solid black;
+        }
+    </style>
+</head>
+<body>
+
+<div class="arrow-up"></div>
+
+<div class="arrow-down" style="margin-top: 50px;"></div>
+
+<div style="margin-top:20px;">
+    <div class="arrow-left"></div>
+</div>
+
+<div style="margin-top:20px;margin-left:20px;">
+    <div class="arrow-up2"></div>
+</div>
+
+<div style="width:500px; height:500px; position:relative;">
+    <div class="arrow-up2" style="position: absolute; right:0;"></div>
+</div>
+
+</body>
+</html>
