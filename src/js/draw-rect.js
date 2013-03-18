@@ -460,7 +460,7 @@
         if (options.ele) {
             $ele = $(options['ele']);
         } else if (options.id) {
-            $ele = $(options['id']);
+            $ele = $('#' + options['id']);
         }
 
 
