@@ -4,9 +4,9 @@ Painter is a javascript library that could draw something on html.
 
 ##how to use?
 
-Painter is based on [jQuery](http://jquery.com/) and [underscore](http://underscorejs.org/).
+Painter is based on [jQuery](http://jquery.com/).
 
-- First, refer jQuery and underscore
+- First, refer jQuery
 - Second, refer draw-rect.css and draw-rect.js
 
 ``` html
@@ -35,9 +35,9 @@ Painter 是一个可以在 html 上画一此东西的 javascript 类库.
 
 ##如何使用?
 
-Painter 基于[jQuery](http://jquery.com/) 和 [underscore](http://underscorejs.org/).
+Painter 基于[jQuery](http://jquery.com/).
 
-- 首先, 引 jQuery 和 underscore
+- 首先, 引 jQuery
 - 然后, 引 draw-rect.css 和 draw-rect.js
 
 ``` html
