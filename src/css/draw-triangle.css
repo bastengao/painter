@@ -4,12 +4,11 @@
  * @author bastengao
  */
 
+/* 三角形 */
 .playground .triangle {
     position: absolute;
-
     width: 0;
     height: 0;
-    border-left: 50px solid transparent;
-    border-right: 50px solid transparent;
-    border-bottom: 100px solid white;
+
+    border: 0 solid transparent;
 }

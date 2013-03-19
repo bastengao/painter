@@ -15,13 +15,43 @@
 <body>
 
 <div class="block-container">
-    <div id="triangle" class="block"></div>
+    <div id="triangle-top" class="block"></div>
     <h3>triangle</h3>
 </div>
 
 <script type="text/javascript">
-    var playground = Painter.playground({id:"triangle"});
-    playground.paintTriangle();
+    var playground = Painter.playground({id:"triangle-top"});
+    playground.paintTriangle('top', 200, 100);
+</script>
+
+<div class="block-container">
+    <div id="triangle-right" class="block"></div>
+    <h3>triangle</h3>
+</div>
+
+<script type="text/javascript">
+    var playground = Painter.playground({id:"triangle-right"});
+    playground.paintTriangle('right', 200, 100);
+</script>
+
+<div class="block-container">
+    <div id="triangle-bottom" class="block"></div>
+    <h3>triangle</h3>
+</div>
+
+<script type="text/javascript">
+    var playground = Painter.playground({id:"triangle-bottom"});
+    playground.paintTriangle('bottom', 200, 100);
+</script>
+
+<div class="block-container">
+    <div id="triangle-left" class="block"></div>
+    <h3>triangle</h3>
+</div>
+
+<script type="text/javascript">
+    var playground = Painter.playground({id:"triangle-left"});
+    playground.paintTriangle('left', 200, 100);
 </script>
 </body>
 </html>

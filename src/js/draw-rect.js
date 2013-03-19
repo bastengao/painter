@@ -304,8 +304,8 @@
     }
 
     //创建新的 Rect
-    Painter.Rect.build = function (playground) {
-        var $rectEle = $('<div class="rect"></div>').appendTo($(playground));
+    Painter.Rect.build = function ($playground) {
+        var $rectEle = $('<div class="rect"></div>').appendTo($playground);
 
         var rect = new Painter.Rect($rectEle[0]);
         rect.init();
@@ -360,7 +360,7 @@
 
         //画矩形
         this.paintRect = function (x, y, width, height) {
-            var rect = Painter.Rect.build(that.ele);
+            var rect = Painter.Rect.build(that.$ele);
             that.rects.push(rect);
             rect.onRemove(function (removingRect) {
                 var index = indexOf(that.rects, removingRect);
