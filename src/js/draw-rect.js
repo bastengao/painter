@@ -17,7 +17,7 @@
 
 
     //代表一个矩形
-    function Rect(ele) {
+    Painter.Rect = function Rect(ele) {
         var that = this;
         this.ele = ele;
         this.$ele = $(ele);
@@ -304,17 +304,17 @@
     }
 
     //创建新的 Rect
-    Rect.build = function (playground) {
+    Painter.Rect.build = function (playground) {
         var $rectEle = $('<div class="rect"></div>').appendTo($(playground));
 
-        var rect = new Rect($rectEle[0]);
+        var rect = new Painter.Rect($rectEle[0]);
         rect.init();
         return rect;
     };
 
 
     //代表操场, 可以在里面画各种矩形
-    function Playground(ele, options) {
+    Painter.Playground = function Playground(ele, options) {
         var that = this;
         //原生元素
         this.ele = ele;
@@ -360,7 +360,7 @@
 
         //画矩形
         this.paintRect = function (x, y, width, height) {
-            var rect = Rect.build(that.ele);
+            var rect = Painter.Rect.build(that.ele);
             that.rects.push(rect);
             rect.onRemove(function (removingRect) {
                 var index = indexOf(that.rects, removingRect);
@@ -464,7 +464,7 @@
         }
 
 
-        return new Playground($ele[0], options);
+        return new Painter.Playground($ele[0], options);
     };
 
     //相对于某一个元素的坐标
@@ -480,9 +480,9 @@
         }
     };
 
-    function indexOf(array, item){
-        for(var i = 0; i < array.length; i++){
-            if(array[i] === item){
+    function indexOf(array, item) {
+        for (var i = 0; i < array.length; i++) {
+            if (array[i] === item) {
                 return i;
             }
             return -1;
